@@ -1,6 +1,6 @@
 APPS = kernel stdlib sasl erts ssl tools runtime_tools crypto inets \
 	public_key mnesia syntax_tools compiler
-COMBO_PLT = $(HOME)/.dobby_combo_dialyzer_plt
+COMBO_PLT = $(HOME)/.dobby_clib_combo_dialyzer_plt
 
 .PHONY: all compile deps test clean distclean ct
 
