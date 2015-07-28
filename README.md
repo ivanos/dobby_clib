@@ -48,12 +48,12 @@ dby:publish(Pubid, {<<"id1">>, <<"id2">, [{<<"linkkey1">>, <<"linkmeta1">>}]}, [
 Adding list of identifiers and links.  This operation is atomic:
 ```
 dby:publish(Pubid, [
-<<"A">>, % identifier with no metadata
+<<"A">>, % identifier with no metadata (for testing)
 {<<"B">>, [{<<"bkey1">>, #{<<"hash1">> => <<"vhash1">>}}]}, % map as metadata
 {<<"B">>, <<"C">>, [{<<"linkkeyAC1">>, <<"linkmetaAC1">>}]}, % link with metadata
 {{<<"D">>, [{<<"dkey1">>, true}]}, <<"C">>, []}, % identifier metadata and link
-{<<"F">>, <<"D">>, delete}, % delete link
-{<<"G">>, delete} % delete identifier
+{<<"F">>, <<"D">>, delete}, % delete link metadata
+{<<"G">>, delete} % delete identifier metadata
 ], [persistent]).
 ```
 
