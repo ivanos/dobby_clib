@@ -158,7 +158,8 @@ search(Fun, Acc, StartIdentifier, Options) ->
 
 %% @doc
 %% `subscribe/4' creates a subscription and when successful returns a
-%% subscription id. A subscription is a standing search and many of
+%% the initial search result and the subscription id.
+%% A subscription is a standing search and many of
 %% the parameters for subscribe are the same as they are for search.
 %% A subscription may be on publishing of persistent data or messages,
 %% or both.  The subscription may provide a delta function, `DFun', that
@@ -176,7 +177,7 @@ search(Fun, Acc, StartIdentifier, Options) ->
 %% no `DFun' is provided, `SFun' is called with NewAcc.  `SFun' may return
 %% `stop' to delete the subscription, otherwise it should return `ok'.  If
 %% no `SFun' is provided, no deltas are delivered.
--spec subscribe(Fun :: search_fun(), Acc :: term(), StartIdentifier :: dby_identifier(), [subscribe_options()]) -> {ok, subscription_id()} | {error, reason()}.
+-spec subscribe(Fun :: search_fun(), Acc :: term(), StartIdentifier :: dby_identifier(), [subscribe_options()]) -> {ok, term(), subscription_id()} | {error, reason()}.
 subscribe(Fun, Acc, StartIdentifier, Options) ->
     call(dby_subscribe, [Fun, Acc, StartIdentifier, Options]).
 
