@@ -164,10 +164,10 @@ search(Fun, Acc, StartIdentifier, Options) ->
 %% A subscription may be on publishing of persistent data or messages,
 %% or both.  The subscription may provide a delta function, `DFun', that
 %% computes the delta from previous search `Acc' to the new search `Acc'.
-%% This function is only called `LastAcc' and `NewAcc' are different.  `DFun'
+%% This function is only called if `LastAcc' and `NewAcc' are different.  `DFun'
 %% returns the computed `Delta', 'stop' to delete the subscription and no
 %% further processing is performed on this subscription, or `nodelta'
-%% to indicate that there was no delta.  If no `DFun' is not provided
+%% to indicate that there was no delta.  If `DFun' is not provided
 %% in the options, Dobby uses `NewAcc' as the delta.  The subscription
 %% may provide a delivery function `SFun'.  `SFun' is only called if there
 %% is a delta in the subscription’s search result, that is, if `DFun' returns
