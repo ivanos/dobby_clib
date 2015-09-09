@@ -158,15 +158,16 @@ search(Fun, Acc, StartIdentifier, Options) ->
 
 %% @doc
 %% `subscribe/4' creates a subscription and when successful returns a
-%% subscription id. A subscription is a standing search and many of
+%% the initial search result and the subscription id.
+%% A subscription is a standing search and many of
 %% the parameters for subscribe are the same as they are for search.
 %% A subscription may be on publishing of persistent data or messages,
 %% or both.  The subscription may provide a delta function, `DFun', that
 %% computes the delta from previous search `Acc' to the new search `Acc'.
-%% This function is only called `LastAcc' and `NewAcc' are different.  `DFun'
+%% This function is only called if `LastAcc' and `NewAcc' are different.  `DFun'
 %% returns the computed `Delta', 'stop' to delete the subscription and no
 %% further processing is performed on this subscription, or `nodelta'
-%% to indicate that there was no delta.  If no `DFun' is not provided
+%% to indicate that there was no delta.  If `DFun' is not provided
 %% in the options, Dobby uses `NewAcc' as the delta.  The subscription
 %% may provide a delivery function `SFun'.  `SFun' is only called if there
 %% is a delta in the subscription’s search result, that is, if `DFun' returns
@@ -176,7 +177,7 @@ search(Fun, Acc, StartIdentifier, Options) ->
 %% no `DFun' is provided, `SFun' is called with NewAcc.  `SFun' may return
 %% `stop' to delete the subscription, otherwise it should return `ok'.  If
 %% no `SFun' is provided, no deltas are delivered.
--spec subscribe(Fun :: search_fun(), Acc :: term(), StartIdentifier :: dby_identifier(), [subscribe_options()]) -> {ok, subscription_id()} | {error, reason()}.
+-spec subscribe(Fun :: search_fun(), Acc :: term(), StartIdentifier :: dby_identifier(), [subscribe_options()]) -> {ok, term(), subscription_id()} | {error, reason()}.
 subscribe(Fun, Acc, StartIdentifier, Options) ->
     call(dby_subscribe, [Fun, Acc, StartIdentifier, Options]).
 
