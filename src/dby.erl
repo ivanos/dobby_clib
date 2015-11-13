@@ -162,21 +162,25 @@ search(Fun, Acc, StartIdentifier, Options) ->
 %% A subscription is a standing search and many of
 %% the parameters for subscribe are the same as they are for search.
 %% A subscription may be on publishing of persistent data or messages,
-%% or both.  The subscription may provide a delta function, `DFun', that
+%% or both. The subscription may provide a delta function, `DFun', that
 %% computes the delta from previous search `Acc' to the new search `Acc'.
-%% This function is only called if `LastAcc' and `NewAcc' are different.  `DFun'
+%% This function is only called if `LastAcc' and `NewAcc' are different. `DFun'
 %% returns the computed `Delta', 'stop' to delete the subscription and no
 %% further processing is performed on this subscription, or `nodelta'
-%% to indicate that there was no delta.  If `DFun' is not provided
-%% in the options, Dobby uses `NewAcc' as the delta.  The subscription
-%% may provide a delivery function `SFun'.  `SFun' is only called if there
+%% to indicate that there was no delta. If `DFun' is not provided
+%% in the options, Dobby uses `NewAcc' as the delta. The subscription
+%% may provide a delivery function `SFun'. `SFun' is called if there
 %% is a delta in the subscription’s search result, that is, if `DFun' returns
-%% a delta.
+%% a delta, or if there was an error processing the subscription. Errors
+%% have the form `{error, Reason}'.
+%%
 %% If `DFun' returns a delta, the `SFun' is called
-%% with the delta.  If `DFun' returns nodelta, `SFun' is not called.  If
-%% no `DFun' is provided, `SFun' is called with NewAcc.  `SFun' may return
-%% `stop' to delete the subscription, otherwise it should return `ok'.  If
-%% no `SFun' is provided, no deltas are delivered.
+%% with the delta. If `DFun' returns nodelta, `SFun' is not called. If
+%% no `DFun' is provided, `SFun' is called with NewAcc. For deltas,
+%% `SFun' may return
+%% `stop' to delete the subscription, otherwise it should return `ok'.
+%% For errors the return from `SFun' is ignored. If
+%% no `SFun' is provided, no deltas or errors are delivered.
 -spec subscribe(Fun :: search_fun(), Acc :: term(), StartIdentifier :: dby_identifier(), [subscribe_options()]) -> {ok, term(), subscription_id()} | {error, reason()}.
 subscribe(Fun, Acc, StartIdentifier, Options) ->
     call(dby_subscribe, [Fun, Acc, StartIdentifier, Options]).
